@@ -168,13 +168,15 @@ class PhoneCatalogue {
 
   _render() {
     this._element.innerHTML = this._template;
-  }
+
+ }
 
 }
-
 
 function createListTemplate(elem) {
   let htmlText = _.template(elem)({arr: phones});
 
   return htmlText;
 }
+
+
