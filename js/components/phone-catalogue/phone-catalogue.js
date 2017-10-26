@@ -157,26 +157,36 @@ const phones = [
 ];
 
 
-class PhoneCatalogue {
+class PhoneCatalogue extends Component {
   constructor(options) {
-    this._element = options.element;
-    this._template = document.getElementById('template-phone-catalogue').innerHTML;
+    super(options.element);
 
-    this._template = createListTemplate(this._template);
+    this.on(
+      'click',
+      this._onPhoneLinkClick.bind(this),
+      '[data-element="phoneLink"]'
+    );
+
     this._render();
   }
 
+  _onPhoneLinkClick(event) {
+    let phoneElement = event.target.closest('[data-element="phone"]');
+
+    let customEvent = new CustomEvent('phoneSelected', {
+      detail: phoneElement.dataset.phoneId,
+      bubbles: false,
+    });
+
+    this._element.dispatchEvent(customEvent);
+  }
+
   _render() {
-    this._element.innerHTML = this._template;
+    let rawTemplate = document.getElementById('template-phone-catalogue').innerHTML;
+    let compiledTemplate = _.template(rawTemplate);
 
- }
-
+    this._element.innerHTML = compiledTemplate({
+      phones: phones,
+    });
+  }
 }
-
-function createListTemplate(elem) {
-  let htmlText = _.template(elem)({arr: phones});
-
-  return htmlText;
-}
-
-
