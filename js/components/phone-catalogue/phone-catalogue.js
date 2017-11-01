@@ -184,6 +184,8 @@ class PhoneCatalogue extends Component {
     let rawTemplate = document.getElementById('template-phone-catalogue').innerHTML;
     let compiledTemplate = _.template(rawTemplate);
 
-    this._element.innerHTML = compiledTemplate({ phones });
+    this._element.innerHTML = compiledTemplate({
+      phones: phones
+    });
   }
 }
