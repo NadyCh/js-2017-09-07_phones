@@ -3,7 +3,7 @@ var static = require('node-static');
 var file = new static.Server('.', {
   cache: 0,
   headers: {
-    'Access-Control-Allow-Origin': 'http://localhost:63342',
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,PUT',
     'Access-Control-Allow-Headers': 'Content-Type'
   }
@@ -11,15 +11,14 @@ var file = new static.Server('.', {
 
 function accept(request, response) {
 
+
   if (request.url.startsWith('/server/data/')) {
-    setTimeout(() => {
-      file.serve(request, response);
-    }, 3000);
+    file.serve(request, response);
   } else {
     file.serve(request, response);
   }
 }
 
-http.createServer(accept).listen(8080);
+http.createServer(accept).listen(3000);
 
-console.log('Server running on port 8080');
+console.log('Server running on port 3000');
